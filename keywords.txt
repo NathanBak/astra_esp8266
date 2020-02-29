@@ -1,0 +1,23 @@
+#######################################
+# Syntax Coloring Map For Astra
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AstraClient	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+connect	KEYWORD2
+printSettings	KEYWORD2
+getKeyspaces	KEYWORD2
+getTables	KEYWORD2
+addRow	KEYWORD2	
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+ASTRA	LITERAL1
