@@ -24,11 +24,13 @@ int KeyValStore::init(const char* id, const char* region, const char* username,
 	logger->log(LEVEL_INFO, String("Database username: ") + username);
 	logger->log(LEVEL_INFO, String("Database password: ") + "********");
 	logger->log(LEVEL_INFO, String("Database keyspace: ") + keyspace);
-	connect();
 
-	createTable();
+	int code = connect();
+	if (code) {
+		return code;
+	}
 
-
+	return createTable();
 }
 
 int KeyValStore::connect() {
@@ -42,10 +44,11 @@ int KeyValStore::connect() {
 		response = response.substring(14);
 		response = response.substring(0, response.indexOf("\""));
 		authToken = response;
-		logger->log(LEVEL_INFO, "Connected and authenticated to Astra database");
+		logger->log(LEVEL_INFO,
+				"Connected and authenticated to Astra database");
 		return 0;
 	} else {
-		logger->log(LEVEL_ERROR, "error authenticating");
+		logger->log(LEVEL_ERROR, "Error authenticating");
 		logger->log(LEVEL_ERROR, response);
 		return 1;
 	}
@@ -66,7 +69,6 @@ int KeyValStore::writeValue(const char* key, const char* val) {
 
 	int code = request(POST, path.c_str(), body.c_str());
 
-
 	if (code != 201) {
 		logger->log(LEVEL_DEBUG, code + " error adding row");
 		logger->log(LEVEL_ERROR, response);
@@ -77,18 +79,22 @@ int KeyValStore::writeValue(const char* key, const char* val) {
 	return 0;
 }
 
-const char* KeyValStore::readValue(const char* key) {
+String KeyValStore::readValue(const char* key) {
 	String path = String("/api/rest/v1/keyspaces/") + keyspace
 			+ "/tables/kvstore/rows/" + key;
 
-	int code = request(POST, path.c_str(), NULL);
+	int code = request(GET, path.c_str(), NULL);
 
 	if (code != 200) {
 		logger->log(LEVEL_DEBUG, code);
-		logger->log(LEVEL_DEBUG, " error adding row");
-		logger->log(LEVEL_DEBUG, response);
+		logger->log(LEVEL_ERROR, "Error reading row");
+		logger->log(LEVEL_ERROR, response);
+		return String(NULL);
 	}
-	return response.c_str();
+
+	String val = response.substring(response.indexOf("val\":\"") + 6);
+
+	return val.substring(0, val.lastIndexOf("\"}],"));
 }
 
 int KeyValStore::createTable() {
@@ -104,10 +110,11 @@ int KeyValStore::createTable() {
 
 	if (code != 201) {
 		logger->log(LEVEL_DEBUG, code);
-		logger->log(LEVEL_DEBUG, " error creating table");
-		logger->log(LEVEL_DEBUG, response);
+		logger->log(LEVEL_ERROR, "error creating table");
+		logger->log(LEVEL_ERROR, response);
+		return code;
 	}
-	return code;
+	return 0;
 }
 
 int KeyValStore::request(httpMethod hm, const char* path, const char* body) {

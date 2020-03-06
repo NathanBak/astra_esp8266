@@ -21,7 +21,7 @@ public:
 
 	int init(const char* id, const char* region, const char* username, const char* password, const char* keyspace);
 	int writeValue(const char* key, const char* val);
-	const char* readValue(const char* key);
+	String readValue(const char* key);
 
 private:
 	enum httpMethod  {GET, POST};
