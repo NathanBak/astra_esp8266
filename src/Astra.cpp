@@ -35,7 +35,6 @@ int AstraClient::connect(const char* id, const char* region,
 int AstraClient::connect() {
 	String jsonSnippet= String("{\"username\":\"") + username + "\",\"password\":\"" + password + "\"}";
 
-//	"{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
 	int code = request(POST, "/api/rest/v1/auth", jsonSnippet.c_str());
 
 	if (response.startsWith("{\"authToken\":")) {
@@ -77,6 +76,9 @@ int AstraClient::addRow(const char* keyspace, const char* table, int colCount, K
 		  body.concat("\",\"value\":\"");
 		  body.concat(columns[i].val);
 		  body.concat("\"}");
+		  if (i<colCount-1) {
+			  body.concat(",");
+		  }
 	  }
 
 	  body.concat("]}");
