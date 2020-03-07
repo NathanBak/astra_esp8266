@@ -51,8 +51,10 @@ public:
 	};
 
 	AstraClient();
+
+	AstraLogger* logger;
+
 	int connect(const char* id, const char* region, const char* username, const char* password);
-	void printSettings();
 	int getKeyspaces();
 	int getTables(const char* keyspace);
 	int addRow(const char* keyspace, const char* table, int colCount, KeyVal columns[]);
