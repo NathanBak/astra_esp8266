@@ -12,7 +12,7 @@
 
 class AstraLogger {
 public:
-#define LEVEL_NONE 0
+#define LEVEL_NONE 100
 #define LEVEL_TRACE 2
 #define LEVEL_DEBUG 4
 #define LEVEL_INFO 6

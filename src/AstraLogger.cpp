@@ -40,9 +40,6 @@ void AstraLogger::log(int level, int msg) {
 }
 
 bool AstraLogger::shouldLog(int level) {
-	if (level == LEVEL_NONE) {
-		return false;
-	}
 	return level >= this->logLevel;
 }
 
