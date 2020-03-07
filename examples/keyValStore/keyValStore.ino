@@ -51,6 +51,10 @@ void setup() {
 	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
 	}
+	
+	// Set the log level to be used by the KeyValStore client.
+	// Values include LEVEL_NONE, LEVEL_DEBUG, LEVEL_INFO, LEVEL_ERROR
+	kvs.logger->setLevel(LEVEL_INFO);
 
 	// Initialize KeyValStore client.  This will connect to the database and
 	// make sure we can authenticate.  It will then create the kvstore table (if
@@ -58,13 +62,9 @@ void setup() {
 	// non-zero if it fails.
 	kvs.init(dbId, dbRegion, dbUser, dbPassword, keyspace);
 
-	// Set the log level to be used by the KeyValStore client.
-	// Values include LEVEL_NONE, LEVEL_DEBUG, LEVEL_INFO, LEVEL_ERROR
-	kvs.logger->setLevel(LEVEL_INFO);
-
 	// Write some key/val combinations to the Astra Database
 	// The writeValue() method returns 0 for success or non-zero for failure
-	kvs.writeValue("Gadgetmobile", "Instpector Gadget");
+	kvs.writeValue("Gadgetmobile", "Inspector Gadget");
 	kvs.writeValue("Lightning McQueen", "Cars");
 	kvs.writeValue("Ecto-1", "Ghostbusters");
 	kvs.writeValue("General Lee", "Dukes of Hazzard");

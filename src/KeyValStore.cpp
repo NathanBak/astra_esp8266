@@ -140,8 +140,8 @@ int KeyValStore::_request(httpMethod hm, const char* path, const char* body) {
 	logger->log(LEVEL_DEBUG, "connecting to ");
 	logger->log(LEVEL_DEBUG, host);
 	if (!client.connect(host, httpsPort)) {
-		Serial.println("connection failed");
-		return -1;
+		logger->log(LEVEL_ERROR, "connection failed");
+		return 1;
 	}
 	logger->log(LEVEL_DEBUG, "requesting path: ");
 	logger->log(LEVEL_DEBUG, path);
