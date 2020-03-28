@@ -22,6 +22,23 @@ The comments in keyValStore.ino should describe what information needs to be spe
 
 The Astra KeyValStore client can be easily embedded into any sketch where you need to store or retrieve simple key/val type data.  The client takes care of creating the database table--the table name is "kvstore" if you want to access it via CQL (see the Astra website for different ways to access your database).
 
+### Adding Rows to a Table
+It is possible to go beyond key/value storage and add arbitrary rows to an existing table.  The addRowToTable example shows how to do exactly that.  The example is loosely based on the [Moby Name Generator](https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go) which can generate names for Docker containers.  The example requires a table created like:
+
+```cql
+	 CREATE TABLE IF NOT EXISTS containernames (
+	   adjective text,
+	   surname text,
+	   randval int,
+	   PRIMARY KEY ((adjective), surname)
+	   );
+```
+
+The comments in addRowToTable.ino should describe what information needs to be specified.  Once the file has been updated with your own information, the sketch should be ready to compiled, uploaded, and run.
+
+The Astra  client can be easily embedded into any sketch where you need to write data into a database from an ESP8266.
+ 
+
 ### Timeseries Data
 _coming soon_
 

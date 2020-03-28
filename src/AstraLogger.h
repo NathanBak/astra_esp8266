@@ -12,12 +12,13 @@
 
 class AstraLogger {
 public:
+#define LEVEL_TRACE 10
+#define LEVEL_DEBUG 20
+#define LEVEL_INFO 30
+#define LEVEL_WARN 40
+#define LEVEL_ERROR 50
 #define LEVEL_NONE 100
-#define LEVEL_TRACE 2
-#define LEVEL_DEBUG 4
-#define LEVEL_INFO 6
-#define LEVEL_WARN 8
-#define LEVEL_ERROR 10
+
 
 	AstraLogger();
 	int getLevel();
