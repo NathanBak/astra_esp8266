@@ -1,7 +1,12 @@
+[![arduino-library-badge](https://www.ardu-badge.com/badge/astra_esp8266.svg?)](https://www.ardu-badge.com/astra_esp8266)
+
 # astra_esp8266
 
 ## Introduction
-Access a Cassandra database from an ESP8266 or ESP32.  The astra_esp8266 library provides basic operations to connect with a Datastax Astra database.  The libray also tries to provided "greased" paths for various common use cases such as basic key/value storage and storing time series sensor data. 
+Access a Cassandra database from an ESP8266 or ESP32.  The astra_esp8266 library provides basic operations to connect with a Datastax Astra database.  The libray also tries to provided "greased" paths for various common use cases such as basic key/value storage and storing time series sensor data.
+
+## Installation
+To install into your Arduino IDE, follow the instructions available on [ArduBadge](https://www.ardu-badge.com/astra_esp8266). 
 
 ## Prereqs
 - Astra Database:  This library requires a [Datastax Astra database](https://www.datastax.com/cloud/datastax-astra) which is built on top of Cassandra.  The free tier of the database will be more than adequate for most uses.  To create an Astra database, go to [https://astra.datastax.com/](https://astra.datastax.com/) and follow the instructions to register and create a database.
