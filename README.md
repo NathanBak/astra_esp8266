@@ -45,5 +45,23 @@ The Astra  client can be easily embedded into any sketch where you need to write
  
 
 ### Timeseries Data
-_coming soon_
 
+Storing timeseries data from multiple IOT type sensors has become common.  The timeseries example shows how to store sensor data and associated time data into an Astra database.  In order to get an accurate time, additional libraries are required including "NTPClient" (by Fabrice Weinberg) and "Time" (by Michael Margolis).  The example assumes a table that was created like:
+
+```cql
+	 CREATE TABLE IF NOT EXISTS jikandata (
+	   sensorid text,
+	   year int,
+	   month int,
+	   day int,
+	   hour int,
+	   minute int,
+	   second int,
+	   data int
+	   PRIMARY KEY ((sensorid, year, month), day, hour, minute, second)
+	   ) WITH CLUSTERING ORDER BY (day DESC, hour DESC, minute DESC, second DESC);
+```
+
+With this approach a single partition with hold a month of data and the reversed fields make it easy to do a "latest" select.  Depending on the amount of data coming in from each sensor, the primary key could just include the sensorid and year to store a full year of data in a single partition.
+
+This example stores random integers into the data column, but presumably there could be one or more data columns which are populated with data from sensors.
